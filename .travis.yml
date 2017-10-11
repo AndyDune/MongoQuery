@@ -5,6 +5,10 @@ php:
 
 services: mongodb
 
+before_install:
+  - if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then pecl install mongodb; fi
+  - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+
 install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
   - if [[ $DEPS == 'latest' ]]; then travis_retry composer require --dev --no-update $COMPOSER_ARGS $LATEST_DEPS ; fi
