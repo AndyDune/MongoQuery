@@ -1,6 +1,6 @@
 # MongoQuery
 
-[![Build Status](https://travis-ci.org/AndyDune/Pipeline.svg?branch=master)](https://travis-ci.org/AndyDune/Pipeline)
+[![Build Status](https://travis-ci.org/AndyDune/MongoQuery.svg?branch=master)](https://travis-ci.org/AndyDune/MongoQuery)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
