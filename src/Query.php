@@ -9,11 +9,21 @@
  */
 namespace AndyDune\MongoQuery;
 
+use AndyDune\MongoQuery\Operator\Between;
+use AndyDune\MongoQuery\Operator\In;
+
 class Query
 {
     protected $fieldsMap = null;
 
     protected $fields = [];
+
+    protected $currentField = '';
+
+    protected $operators = [
+        'in' => In::class,
+        'between' => Between::class
+    ];
 
     public function __construct($fieldsMap = null)
     {
@@ -22,13 +32,22 @@ class Query
 
     public function field($fieldName)
     {
-        $fieldObject = new Field($fieldName, $this);
-        $this->fields[$fieldName] = $fieldObject;
-        return $fieldObject;
+        $this->currentField = $fieldName;
+        return $this;
+    }
+
+    public function __call($name, $arguments)
+    {
+        if (!isset($this->operators[$name])) {
+            throw new Exception('Operator is not exist. May be yet.');
+        }
+        $function = new $this->operators[$name]($this->currentField);
+        $this->fields[] = $function(...$arguments);
+        return $this;
     }
 
     public function get()
     {
-        return [];
+        return ['$and' => $this->fields];
     }
 }
