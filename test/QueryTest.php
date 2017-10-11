@@ -10,7 +10,6 @@
  */
 
 namespace AndyDune\MongoQueryTest;
-use AndyDune\MongoQuery\Field;
 use AndyDune\MongoQuery\Query;
 use PHPUnit\Framework\TestCase;
 

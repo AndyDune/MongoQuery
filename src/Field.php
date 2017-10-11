@@ -13,6 +13,11 @@
 namespace AndyDune\MongoQuery;
 
 
+/**
+ * Class Field
+ * @package AndyDune\MongoQuery
+ * @deprecated
+ */
 class Field
 {
     /**
