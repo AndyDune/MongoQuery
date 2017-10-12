@@ -28,7 +28,7 @@ $cursor = $collection->find((new Query)->field('type')->in('virginia', 'latakia'
 ```
 
 
-#Installation
+Installation
 ------------
 
 Installation using composer:
