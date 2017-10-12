@@ -4,7 +4,32 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
 
 
-Add beauty to momgodb query arrays.
+Add beauty to momgodb query arrays. Less errors, less brackets, more understanding.
+
+Installation
+------------
+
+Installation using composer:
+
+```
+composer require andydune/mongo-query
+```
+Or if composer didn't install globally:
+```
+php composer.phar require andydune/mongo-query
+```
+Or edit your `composer.json`:
+```
+"require" : {
+     "andydune/pipeline": "^0"
+}
+
+```
+And execute command:
+```
+php composer.phar update
+```
+
 
 ## What is beauty
 Originally it looks like:
@@ -21,6 +46,63 @@ $collection = (new MongoDB\Client)->test->tobacco;
 $cursor = $collection->find((new MongoQuery)->field('price')->lessThan(1000)->get());
 
 $collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find((new MongoQuery)->field('price')->in('virginia', 'latakia')->get());
+$cursor = $collection->find((new MongoQuery)->field('type')->in('virginia', 'latakia')->get());
 
+```
+
+## Elements of Beauty
+
+### Not
+
+Operator make negative condition for right next operator in chain.
+
+*Important!* It is not suitable for all operators.
+
+### In
+
+Original:
+```php
+$collection = (new MongoDB\Client)->base->tobacco;
+$cursor = $collection->find(['type' => ['$in' => ['virginia', 'latakia']]]);
+// if not
+$cursor = $collection->find(['type' => ['$not' => ['$in' => ['virginia', 'latakia']]]]); // to many brackets
+```
+
+More beauty
+```php
+$collection = (new MongoDB\Client)->test->tobacco;
+$cursor = $collection->find((new MongoQuery)->field('type')->in('virginia', 'latakia')->get());
+//or 
+$cursor = $collection->find((new MongoQuery)->field('type')->in(['virginia', 'latakia'])->get());
+//or 
+$cursor = $collection->find((new MongoQuery)->field('type')->in(['virginia'], 'latakia')->get());
+```
+Operation can be used with `not` modifier.
+```php
+$cursor = $collection->find((new MongoQuery)->field('type')->not()->in('virginia', 'latakia')->get());
+```
+
+### Between
+
+Original:
+```php
+$collection = (new MongoDB\Client)->base->tobacco;
+$cursor = $collection->find(
+['$and' => [
+    ['price' => ['$gt' => 10]],
+    ['price' => ['$lt' => 100]]
+]]);
+```
+
+More beauty
+```php
+$collection = (new MongoDB\Client)->test->tobacco;
+$cursor = $collection->find(
+(new MongoQuery)->field('price')->between->(10, 100)->get()
+);
+```
+
+Operation can be used with `not` modifier.
+```php
+(new MongoQuery)->field('price')->not()->between->(10, 100)->get()
 ```

@@ -46,6 +46,9 @@ class QueryTest extends TestCase
         $data = $query->field('code')->in('1', [2, 3])->get();
         $this->assertEquals($wait, $data);
 
+        $query = new Query();
+        $dataNot = $query->field('code')->not()->in('1', [2, 3])->get();
+
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
         $collection->deleteMany([]);
@@ -57,6 +60,10 @@ class QueryTest extends TestCase
         $collection->insertOne(['code' => '1']);
         $results = $collection->find($data)->toArray();
         $this->assertCount(3, $results);
+
+        $results = $collection->find($dataNot)->toArray();
+        $this->assertCount(1, $results);
+
     }
 
     public function testBetween()
@@ -75,6 +82,9 @@ class QueryTest extends TestCase
         $data = $query->field('price')->between(10, 100)->get();
         $this->assertEquals($wait, $data);
 
+        $query = new Query();
+        $dataNot = $query->field('price')->not()->between(10, 100)->get();
+
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
         $collection->deleteMany([]);
@@ -83,7 +93,14 @@ class QueryTest extends TestCase
         $collection->insertOne(['price' => '30']);
         $collection->insertOne(['price' => 105]);
 
+        // price = '30' - out of type
+
         $results = $collection->find($data)->toArray();
         $this->assertCount(1, $results);
+
+        $results = $collection->find($dataNot)->toArray();
+        $this->assertCount(2, $results);
+
+
     }
 }

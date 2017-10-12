@@ -27,6 +27,10 @@ class In extends OperatorAbstract
             }
         }
         $data = array_merge($data, ...$params);
+        if ($this->query->isNot()) {
+            $this->query->not(false);
+            return [$this->fieldName => ['$not' => ['$in' => $data]]];
+        }
         return [$this->fieldName => ['$in' => $data]];
     }
 }

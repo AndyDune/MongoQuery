@@ -21,6 +21,15 @@ class Between extends OperatorAbstract
         if (count($params) != 2) {
             return false;
         }
+        if ($this->query->isNot()) {
+            $this->query->not(false);
+            return [
+                '$or' => [
+                    [$this->fieldName => ['$lt' => $params[0]]],
+                    [$this->fieldName => ['$gt' => $params[1]]]
+                ]
+            ];
+        }
         return ['$and' => [
             [$this->fieldName => ['$gt' => $params[0]]],
             [$this->fieldName => ['$lt' => $params[1]]]
