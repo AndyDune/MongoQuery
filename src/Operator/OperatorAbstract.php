@@ -13,12 +13,23 @@
 namespace AndyDune\MongoQuery\Operator;
 
 
+use AndyDune\MongoQuery\Query;
+
 abstract class OperatorAbstract
 {
+    /**
+     * @var string
+     */
     protected $fieldName;
-    public function __construct($fieldName)
+
+    /**
+     * @var Query
+     */
+    protected $query;
+
+    public function __construct($fieldName, Query $query)
     {
+        $this->query = $query;
         $this->fieldName = $fieldName;
     }
-
 }

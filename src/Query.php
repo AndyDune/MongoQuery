@@ -41,7 +41,7 @@ class Query
         if (!isset($this->operators[$name])) {
             throw new Exception('Operator is not exist. May be yet.');
         }
-        $function = new $this->operators[$name]($this->currentField);
+        $function = new $this->operators[$name]($this->currentField, $this);
         $this->fields[] = $function(...$arguments);
         return $this;
     }
