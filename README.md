@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/AndyDune/MongoQuery.svg?branch=master)](https://travis-ci.org/AndyDune/MongoQuery)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
+[![Packagist Version](https://img.shields.io/packagist/v/andydune/mongo-query.svg?style=flat-square)](https://packagist.org/packages/andydune/mongo-query)
+[![Total Downloads](https://img.shields.io/packagist/dt/andydune/mongo-query.svg?style=flat-square)](https://packagist.org/packages/andydune/mongo-query)
 
 
 Add beauty to momgodb query arrays. Less errors, less brackets, more understanding.
