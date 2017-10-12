@@ -110,3 +110,16 @@ Operation can be used with `not` modifier.
 ```php
 (new Query)->field('price')->not()->between->(10, 100)->get()
 ```
+
+### gt and lt  
+
+Operators for `$gt` and `$lt` comparision. 
+
+```php
+(new Query)->field('price')->lt->(10)->get();
+
+(new Query)->field('price')->gt->(100)->get();
+```
+
+
+Operation can not be used with `not` modifier. 

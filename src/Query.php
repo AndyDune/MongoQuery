@@ -9,7 +9,7 @@
  */
 namespace AndyDune\MongoQuery;
 
-use AndyDune\MongoQuery\Operator\{Between, In, Not};
+use AndyDune\MongoQuery\Operator\{Between, In, Not, GreaterThan, LessThan};
 
 class Query
 {
@@ -26,7 +26,9 @@ class Query
     protected $operators = [
         'in' => In::class,
         'between' => Between::class,
-        'not' => Not::class
+        'not' => Not::class,
+        'gt' => GreaterThan::class,
+        'lt' => LessThan::class,
     ];
 
     public function __construct($fieldsMap = null)

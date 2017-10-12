@@ -100,7 +100,30 @@ class QueryTest extends TestCase
 
         $results = $collection->find($dataNot)->toArray();
         $this->assertCount(2, $results);
-
-
     }
+
+    public function testLessThanGreaterThan()
+    {
+        $query = new Query();
+        $dataGreater = $query->field('price')->gt(100)->get();
+
+        $query = new Query();
+        $dataLess = $query->field('price')->lt(50)->get();
+
+        $mongo =  new \MongoDB\Client();
+        $collection = $mongo->selectDatabase('test')->selectCollection('test');
+        $collection->deleteMany([]);
+        $collection->insertOne(['price' => 110]);
+        $collection->insertOne(['price' => 120]);
+        $collection->insertOne(['price' => 90]);
+        $collection->insertOne(['price' => '30']);
+        $collection->insertOne(['price' => 45]);
+
+        $results = $collection->find($dataGreater)->toArray();
+        $this->assertCount(2, $results);
+
+        $results = $collection->find($dataLess)->toArray();
+        $this->assertCount(1, $results);
+    }
+
 }
