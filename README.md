@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/andydune/mongo-query.svg?style=flat-square)](https://packagist.org/packages/andydune/mongo-query)
 
 
-Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, in't only builder. So you may feel free to use it standalone or with any orm like [mongolid](https://github.com/leroy-merlin-br/mongolid)
+Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, it's only builder. So you may feel free to use it standalone or with any orm like [mongolid](https://github.com/leroy-merlin-br/mongolid)
 
 Installation
 ------------
@@ -45,10 +45,10 @@ $cursor = $collection->find(['type' => ['$in' => ['virginia', 'latakia']]]); // 
 MongoQuery change it:
 ```php
 $collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find((new MongoQuery)->field('price')->lessThan(1000)->get());
+$cursor = $collection->find((new Query)->field('price')->lessThan(1000)->get());
 
 $collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find((new MongoQuery)->field('type')->in('virginia', 'latakia')->get());
+$cursor = $collection->find((new Query)->field('type')->in('virginia', 'latakia')->get());
 
 ```
 
@@ -72,16 +72,18 @@ $cursor = $collection->find(['type' => ['$not' => ['$in' => ['virginia', 'lataki
 
 More beauty
 ```php
+use AndyDune\MongoQuery\Query;
+
 $collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find((new MongoQuery)->field('type')->in('virginia', 'latakia')->get());
+$cursor = $collection->find((new Query)->field('type')->in('virginia', 'latakia')->get());
 //or 
-$cursor = $collection->find((new MongoQuery)->field('type')->in(['virginia', 'latakia'])->get());
+$cursor = $collection->find((new Query)->field('type')->in(['virginia', 'latakia'])->get());
 //or 
-$cursor = $collection->find((new MongoQuery)->field('type')->in(['virginia'], 'latakia')->get());
+$cursor = $collection->find((new Query)->field('type')->in(['virginia'], 'latakia')->get());
 ```
 Operation can be used with `not` modifier.
 ```php
-$cursor = $collection->find((new MongoQuery)->field('type')->not()->in('virginia', 'latakia')->get());
+$cursor = $collection->find((new Query)->field('type')->not()->in('virginia', 'latakia')->get());
 ```
 
 ### Between
@@ -100,11 +102,11 @@ More beauty
 ```php
 $collection = (new MongoDB\Client)->test->tobacco;
 $cursor = $collection->find(
-(new MongoQuery)->field('price')->between->(10, 100)->get()
+(new Query)->field('price')->between->(10, 100)->get()
 );
 ```
 
 Operation can be used with `not` modifier.
 ```php
-(new MongoQuery)->field('price')->not()->between->(10, 100)->get()
+(new Query)->field('price')->not()->between->(10, 100)->get()
 ```
