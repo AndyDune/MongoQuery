@@ -15,6 +15,7 @@
 namespace AndyDune\MongoQuery;
 
 use AndyDune\MongoQuery\Operator\{Between, In, Not, GreaterThan, LessThan};
+use function foo\func;
 
 /**
  * @method $this between($value1, $value2)
@@ -40,6 +41,8 @@ class Query
         'gt' => GreaterThan::class,
         'lt' => LessThan::class,
     ];
+
+    protected $fieldsJoinLogic = '$and';
 
     public function __construct($fieldsMap = null)
     {
@@ -89,10 +92,40 @@ class Query
         return $this->isNot;
     }
 
-
-    public function get()
+    /**
+     * @param Query $query
+     * @return mixed
+     */
+    public function addQuery(Query $query)
     {
-        return ['$and' => $this->fields];
+        $this->fields[] = $query;
+        return $this;
+    }
+
+    /**
+     * Describe logic for join condition for many fields.
+     *
+     * @param string $logic can be: and, or, nor
+     * @return $this
+     */
+    public function setFieldsJoinLogic($logic = 'and')
+    {
+        if ($logic) {
+            $logic = ltrim($logic, '$');
+            $this->fieldsJoinLogic = '$' . $logic;
+        }
+        return $this;
+    }
+
+    public function get($logic = null)
+    {
+        $this->setFieldsJoinLogic($logic);
+        return [$this->fieldsJoinLogic => array_map((function ($value) {
+            if ($value instanceof Query) {
+                return $value->get();
+            }
+            return $value;
+        }), $this->fields)];
     }
 
     public function setNextCallBack(callable $function)

@@ -126,4 +126,47 @@ class QueryTest extends TestCase
         $this->assertCount(1, $results);
     }
 
+    public function testNestedQuery()
+    {
+
+        $mongo =  new \MongoDB\Client();
+        $collection = $mongo->selectDatabase('test')->selectCollection('test');
+        $collection->deleteMany([]);
+        $collection->insertOne(['price' => 110]);
+        $collection->insertOne(['price' => 10]);
+        $collection->insertOne(['price' => 90]);
+        $collection->insertOne(['price' => 45]);
+
+        $query = new Query();
+        $data = $query->field('price')->gt(80)->get();
+
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(2, $results);
+
+        $queryAdd = new Query();
+        $queryAdd->field('price')->lt(100);
+        $data = $query->addQuery($queryAdd)->get();
+
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(1, $results);
+
+        $query->setFieldsJoinLogic('or');
+        $results = $collection->find($query->get())->toArray();
+        $this->assertCount(4, $results);
+
+
+        $query = new Query();
+        $query->field('price')->gt(100)->get();
+
+        $queryAdd = new Query();
+        $query->addQuery($queryAdd);
+        $queryAdd->field('price')->lt(50);
+
+        $query->setFieldsJoinLogic('nor');
+        $results = $collection->find($query->get())->toArray();
+        $this->assertCount(1, $results);
+
+    }
+
+
 }
