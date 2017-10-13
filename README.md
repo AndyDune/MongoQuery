@@ -8,6 +8,26 @@
 
 Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, it's only builder. So you may feel free to use it standalone or with any orm like [mongolid](https://github.com/leroy-merlin-br/mongolid)
 
+## What is beauty
+Originally it looks like:
+```php
+$collection = (new MongoDB\Client)->base->tobacco;
+$cursor = $collection->find(['price' => ['$lt' => 1000]]);
+
+$collection = (new MongoDB\Client)->test->tobacco;
+$cursor = $collection->find(['type' => ['$in' => ['virginia', 'latakia']]]); // 3 brackets at once
+```
+MongoQuery change it:
+```php
+$collection = (new MongoDB\Client)->test->tobacco;
+$cursor = $collection->find((new Query)->field('price')->lessThan(1000)->get());
+
+$collection = (new MongoDB\Client)->test->tobacco;
+$cursor = $collection->find((new Query)->field('type')->in('virginia', 'latakia')->get());
+
+```
+
+
 Installation
 ------------
 
@@ -30,26 +50,6 @@ Or edit your `composer.json`:
 And execute command:
 ```
 php composer.phar update
-```
-
-
-## What is beauty
-Originally it looks like:
-```php
-$collection = (new MongoDB\Client)->base->tobacco;
-$cursor = $collection->find(['price' => ['$lt' => 1000]]);
-
-$collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find(['type' => ['$in' => ['virginia', 'latakia']]]); // 3 brackets at once
-```
-MongoQuery change it:
-```php
-$collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find((new Query)->field('price')->lessThan(1000)->get());
-
-$collection = (new MongoDB\Client)->test->tobacco;
-$cursor = $collection->find((new Query)->field('type')->in('virginia', 'latakia')->get());
-
 ```
 
 ## Elements of Beauty
