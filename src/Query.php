@@ -1,16 +1,27 @@
 <?php
 /**
- * ----------------------------------------------
- * | Author: Андрей Рыжов (Dune) <info@rznw.ru>  |
- * | Site: www.rznw.ru                           |
- * | Phone: +7 (4912) 51-10-23                   |
- * -----------------------------------------------
+ * Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, it's only builder.
+ *
+ * PHP version 7.0 and 7.1
+ *
+ *
+ * @package andydune/mongo-query
+ * @link  https://github.com/AndyDune/MongoQuery for the canonical source repository
+ * @license   http://www.opensource.org/licenses/mit-license.html  MIT License
+ * @author Andrey Ryzhov  <info@rznw.ru>
+ * @copyright 2017 Andrey Ryzhov
  *
  */
 namespace AndyDune\MongoQuery;
 
 use AndyDune\MongoQuery\Operator\{Between, In, Not, GreaterThan, LessThan};
 
+/**
+ * @method $this between($value1, $value2)
+ * @method $this in(...$values)
+ * @method $this gt($value)
+ * @method $this lt($value)
+ */
 class Query
 {
     protected $fieldsMap = null;
@@ -26,7 +37,6 @@ class Query
     protected $operators = [
         'in' => In::class,
         'between' => Between::class,
-        'not' => Not::class,
         'gt' => GreaterThan::class,
         'lt' => LessThan::class,
     ];
@@ -36,6 +46,12 @@ class Query
         $this->fieldsMap = $fieldsMap;
     }
 
+    /**
+     * Add collection field name to description with next operators.
+     *
+     * @param string $fieldName
+     * @return $this
+     */
     public function field($fieldName)
     {
         $this->currentField = $fieldName;
