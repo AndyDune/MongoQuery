@@ -122,4 +122,18 @@ Operators for `$gt` and `$lt` comparision.
 ```
 
 
-Operation can not be used with `not` modifier. 
+Operation can not be used with `not` modifier.
+
+## Nested queries
+
+Query objects can be the conditions of new query. There is method `addQuery` for this.
+
+```php
+$query = new Query();
+$query->field('price')->gt(80);
+
+$queryAdd = new Query();
+$queryAdd->field('price')->lt(100);
+
+$data = $query->addQuery($queryAdd)->get();
+``` 
