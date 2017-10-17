@@ -23,6 +23,8 @@ class Between extends OperatorAbstract
         if (count($params) != 2) {
             return false;
         }
+        $params[0] = $this->query->getFieldsCorrector()->correct($this->fieldName, $params[0]);
+        $params[1] = $this->query->getFieldsCorrector()->correct($this->fieldName, $params[1]);
         if ($this->query->isNot()) {
             $this->query->not(false);
             return [

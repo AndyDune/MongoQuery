@@ -23,7 +23,7 @@ class GreaterThan extends OperatorAbstract
         if (count($params) != 1) {
             return false;
         }
-        return [$this->fieldName => ['$gt' => $params[0]]];
+        return [$this->fieldName => ['$gt' => $this->query->getFieldsCorrector()->correct($this->fieldName, $params[0])]];
     }
 
 }

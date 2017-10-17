@@ -100,6 +100,22 @@ class QueryTest extends TestCase
 
         $results = $collection->find($dataNot)->toArray();
         $this->assertCount(2, $results);
+
+        // with fields corrector:
+
+        $collection->insertOne(['price' => 60]);
+        $collection->insertOne(['price' => 70]);
+
+        $query = new Query();
+        $data = $query->field('price')->between('50', '100')->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(0, $results);
+
+        $query = new Query(['price' => 'int']);
+        $data = $query->field('price')->between('50', '100')->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(2, $results);
+
     }
 
     public function testLessThanGreaterThan()

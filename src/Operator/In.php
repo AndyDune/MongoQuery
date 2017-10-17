@@ -29,6 +29,9 @@ class In extends OperatorAbstract
             }
         }
         $data = array_merge($data, ...$params);
+        $data = array_map((function($value) {
+            return $this->query->getFieldsCorrector()->correct($this->fieldName, $value);
+        })->bindTo($this), $data);
         if ($this->query->isNot()) {
             $this->query->not(false);
             return [$this->fieldName => ['$not' => ['$in' => $data]]];

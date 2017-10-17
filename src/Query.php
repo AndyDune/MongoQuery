@@ -15,7 +15,6 @@
 namespace AndyDune\MongoQuery;
 
 use AndyDune\MongoQuery\Operator\{Between, In, Not, GreaterThan, LessThan};
-use function foo\func;
 
 /**
  * @method $this between($value1, $value2)
@@ -25,7 +24,10 @@ use function foo\func;
  */
 class Query
 {
-    protected $fieldsMap = null;
+    /**
+     * @var FieldTypeCorrector
+     */
+    protected $fieldsCorrector;
 
     protected $fields = [];
 
@@ -46,7 +48,15 @@ class Query
 
     public function __construct($fieldsMap = null)
     {
-        $this->fieldsMap = $fieldsMap;
+        $this->fieldsCorrector = new FieldTypeCorrector($fieldsMap);
+    }
+
+    /**
+     * @return FieldTypeCorrector
+     */
+    public function getFieldsCorrector()
+    {
+        return $this->fieldsCorrector;
     }
 
     /**
@@ -61,6 +71,14 @@ class Query
         return $this;
     }
 
+    /**
+     * Method names are in class operations var
+     *
+     * @param $name
+     * @param $arguments
+     * @return $this
+     * @throws Exception
+     */
     public function __call($name, $arguments)
     {
         if (!isset($this->operators[$name])) {
@@ -87,6 +105,11 @@ class Query
         return $this;
     }
 
+    /**
+     * Return flag negative next operation.
+     *
+     * @return bool
+     */
     public function isNot()
     {
         return $this->isNot;

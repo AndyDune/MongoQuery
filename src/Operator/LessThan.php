@@ -22,7 +22,7 @@ class LessThan extends OperatorAbstract
         if (count($params) != 1) {
             return false;
         }
-        return [$this->fieldName => ['$lt' => $params[0]]];
+        return [$this->fieldName => ['$lt' => $this->query->getFieldsCorrector()->correct($this->fieldName, $params[0])]];
     }
 
 }
