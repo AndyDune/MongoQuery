@@ -137,3 +137,24 @@ $queryAdd->field('price')->lt(100);
 
 $data = $query->addQuery($queryAdd)->get();
 ``` 
+
+## Data type correction
+
+It's important to use as parameters for query data with type same as data in collection.
+So `1 != '1'`.
+
+`Query` constructor can receive array with meta description for fields.
+
+```php
+$query = new Query([
+   'price' => 'int',
+   'type' => 'string',
+]);
+$queryArray = $queryAdd->field('price')->gt(false)->get();
+
+// after all:
+$queryArray = [
+   'price' => ['$gt' => 0] // (int)false -> 0
+];
+
+``` 
