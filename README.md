@@ -111,6 +111,29 @@ Operation can be used with `not` modifier.
 (new Query)->field('price')->not()->between->(10, 100)->get()
 ```
 
+### eq 
+
+Matches values that are equal to a specified value.
+
+```php
+(new Query)->field('price')->eq->(10)->get(); // ['price' => ['$eq' => 10]]
+
+```
+
+Operation can not be used with `not` modifier. It is special method `ne`
+
+### ne 
+
+Matches all values that are not equal to a specified value.
+
+```php
+(new Query)->field('price')->ne->(10)->get(); // ['price' => ['$ne' => 10]]
+
+```
+
+Operation can not be used with `not` modifier.
+
+
 ### gt and lt  
 
 Operators for `$gt` and `$lt` comparision. 

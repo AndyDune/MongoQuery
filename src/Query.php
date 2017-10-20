@@ -14,7 +14,9 @@
  */
 namespace AndyDune\MongoQuery;
 
-use AndyDune\MongoQuery\Operator\{Between, In, Not, GreaterThan, LessThan};
+use AndyDune\MongoQuery\Operator\{
+    Between, Equal, In, Not, GreaterThan, LessThan, NotEqual
+};
 
 /**
  * @method $this between($value1, $value2)
@@ -42,6 +44,8 @@ class Query
         'between' => Between::class,
         'gt' => GreaterThan::class,
         'lt' => LessThan::class,
+        'eq' => Equal::class,
+        'ne' => NotEqual::class,
     ];
 
     protected $fieldsJoinLogic = '$and';

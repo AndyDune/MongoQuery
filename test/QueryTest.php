@@ -185,4 +185,38 @@ class QueryTest extends TestCase
     }
 
 
+    public function testEqualQuery()
+    {
+
+        $mongo =  new \MongoDB\Client();
+        $collection = $mongo->selectDatabase('test')->selectCollection('test');
+        $collection->deleteMany([]);
+        $collection->insertOne(['price' => 10]);
+        $collection->insertOne(['price' => 90]);
+
+        $query = new Query();
+        $data = $query->field('price')->eq(80)->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(0, $results);
+
+        $query = new Query();
+        $data = $query->field('price')->eq(10)->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(1, $results);
+        $this->assertEquals(10, $results[0]['price']);
+
+
+        $query = new Query();
+        $data = $query->field('price')->ne(80)->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(2, $results);
+
+        $query = new Query();
+        $data = $query->field('price')->ne(10)->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(1, $results);
+        $this->assertEquals(90, $results[0]['price']);
+
+    }
+
 }
