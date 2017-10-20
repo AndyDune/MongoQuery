@@ -205,6 +205,16 @@ class QueryTest extends TestCase
         $this->assertCount(1, $results);
         $this->assertEquals(10, $results[0]['price']);
 
+        $query = new Query();
+        $data = $query->field('price')->eq('10')->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(0, $results);
+
+        $query = new Query(['price' => 'int']);
+        $data = $query->field('price')->eq('10')->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(1, $results);
+        $this->assertEquals(10, $results[0]['price']);
 
         $query = new Query();
         $data = $query->field('price')->ne(80)->get();
@@ -216,6 +226,18 @@ class QueryTest extends TestCase
         $results = $collection->find($data)->toArray();
         $this->assertCount(1, $results);
         $this->assertEquals(90, $results[0]['price']);
+
+        $query = new Query();
+        $data = $query->field('price')->ne('10')->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(2, $results);
+
+        $query = new Query(['price' => 'int']);
+        $data = $query->field('price')->ne('10')->get();
+        $results = $collection->find($data)->toArray();
+        $this->assertCount(1, $results);
+        $this->assertEquals(90, $results[0]['price']);
+
 
     }
 
