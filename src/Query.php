@@ -98,6 +98,28 @@ class Query
     }
 
     /**
+     * Select records with accumulated conditions.
+     *
+     * @param \MongoDB\Collection $collection
+     * @return \MongoDB\Driver\Cursor
+     */
+    public function find(\MongoDB\Collection $collection)
+    {
+        return $collection->find($this->get());
+    }
+
+    /**
+     * Select one record with accumulated conditions.
+     *
+     * @param \MongoDB\Collection $collection
+     * @return array|null|object
+     */
+    public function findOne(\MongoDB\Collection $collection)
+    {
+        return $collection->findOne($this->get());
+    }
+
+    /**
      *
      *
      * @param bool $on on or off nex not.
