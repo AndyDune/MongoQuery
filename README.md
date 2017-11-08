@@ -11,19 +11,24 @@ Add beauty to momgodb query arrays. Less errors, less brackets, more understandi
 ## What is beauty
 Originally it looks like:
 ```php
-$collection = (new MongoDB\Client)->base->tobacco;
+$collection = (new MongoDB\Client)->shop->tobacco;
 $cursor = $collection->find(['price' => ['$lt' => 1000]]);
 
-$collection = (new MongoDB\Client)->test->tobacco;
+$collection = (new MongoDB\Client)->shop->tobacco;
 $cursor = $collection->find(['type' => ['$in' => ['virginia', 'latakia']]]); // 3 brackets at once
 ```
 MongoQuery change it:
 ```php
-$collection = (new MongoDB\Client)->test->tobacco;
+$collection = (new MongoDB\Client)->shop->tobacco;
 $cursor = $collection->find((new Query)->field('price')->lessThan(1000)->get());
+// or
+$cursor = (new Query)->field('price')->lessThan(1000)->find($collection);
+
 
 $collection = (new MongoDB\Client)->test->tobacco;
 $cursor = $collection->find((new Query)->field('type')->in('virginia', 'latakia')->get());
+// or 
+$cursor = (new Query)->field('type')->in('virginia', 'latakia')->find($collection)
 
 ```
 
@@ -50,6 +55,21 @@ Or edit your `composer.json`:
 And execute command:
 ```
 php composer.phar update
+```
+
+## Execution
+
+You can use methods `find` or `findOne`: 
+
+```php
+$query = new Query();
+$query->field('price')->between(10, 100);
+
+$mongo =  new \MongoDB\Client();
+$collection = $mongo->selectDatabase('shop')->selectCollection('tobacco');
+$result = $query->find($collection, ['sort' => ['name' => 1]])->toArray();
+
+$result = $query->findOne($collection, ['sort' => ['name' => 1]]);
 ```
 
 ## Elements of Beauty

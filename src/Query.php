@@ -101,22 +101,24 @@ class Query
      * Select records with accumulated conditions.
      *
      * @param \MongoDB\Collection $collection
+     * @param array $options
      * @return \MongoDB\Driver\Cursor
      */
-    public function find(\MongoDB\Collection $collection)
+    public function find(\MongoDB\Collection $collection, $options = [])
     {
-        return $collection->find($this->get());
+        return $collection->find($this->get(), $options);
     }
 
     /**
      * Select one record with accumulated conditions.
      *
      * @param \MongoDB\Collection $collection
+     * @param array $options
      * @return array|null|object
      */
-    public function findOne(\MongoDB\Collection $collection)
+    public function findOne(\MongoDB\Collection $collection, $options = [])
     {
-        return $collection->findOne($this->get());
+        return $collection->findOne($this->get(), $options);
     }
 
     /**

@@ -82,8 +82,8 @@ class QueryTest extends TestCase
         $data = $query->field('price')->between(10, 100)->get();
         $this->assertEquals($wait, $data);
 
-        $query = new Query();
-        $dataNot = $query->field('price')->not()->between(10, 100)->get();
+        $queryNot = new Query();
+        $dataNot = $queryNot->field('price')->not()->between(10, 100)->get();
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
@@ -97,6 +97,10 @@ class QueryTest extends TestCase
 
         $results = $collection->find($data)->toArray();
         $this->assertCount(1, $results);
+
+        // Alternative method:
+        $resultsAlter = $query->find($collection, ['sort' => ['price' => 1]])->toArray();
+        $this->assertEquals($results, $resultsAlter);
 
         $results = $collection->find($dataNot)->toArray();
         $this->assertCount(2, $results);
