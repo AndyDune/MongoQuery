@@ -15,14 +15,22 @@
 namespace AndyDune\MongoQuery;
 
 use AndyDune\MongoQuery\Operator\{
-    Between, Equal, In, Not, GreaterThan, LessThan, NotEqual
+    Between, Equal, In, Not, GreaterThan, LessThan, NotEqual,
+    Limit, Skip, SortAsc, SortDesc
 };
 
 /**
  * @method $this between($value1, $value2)
  * @method $this in(...$values)
  * @method $this gt($value)
+ * @method $this eq($value)
  * @method $this lt($value)
+ * @method $this limit($value)
+ * @method $this skip($value)
+ * @method $this offset($value)
+ * @method $this sortAsc()
+ * @method $this sortDesc()
+ *
  */
 class Query
 {
@@ -39,6 +47,13 @@ class Query
 
     protected $isNot = false;
 
+    /**
+     * Options for mongo requests within find and findOne methods.
+     *
+     * @var array
+     */
+    protected $findOptions = [];
+
     protected $operators = [
         'in' => In::class,
         'between' => Between::class,
@@ -46,6 +61,11 @@ class Query
         'lt' => LessThan::class,
         'eq' => Equal::class,
         'ne' => NotEqual::class,
+        'limit' => Limit::class,
+        'skip'  => Skip::class,
+        'offset'   => Skip::class, // alias for skip
+        'sortAsc'  => SortAsc::class,
+        'sortDesc' => SortDesc::class
     ];
 
     protected $fieldsJoinLogic = '$and';
@@ -53,6 +73,17 @@ class Query
     public function __construct($fieldsMap = null)
     {
         $this->fieldsCorrector = new FieldTypeCorrector($fieldsMap);
+    }
+
+    public function mergeFindOptions($options)
+    {
+        $this->findOptions = array_replace($this->findOptions, $options);
+        return $this;
+    }
+
+    public function getFindOptions()
+    {
+        return $this->findOptions;
     }
 
     /**
@@ -89,9 +120,11 @@ class Query
             throw new Exception('Operator is not exist. May be yet.');
         }
         $function = new $this->operators[$name]($this->currentField, $this);
-        $result = $function(...$arguments);
-        if ($result) {
-            $this->fields[] = $this->executeNextCallBack($result);
+        if (is_callable($function)) {
+            $result = $function(...$arguments);
+            if ($result) {
+                $this->fields[] = $this->executeNextCallBack($result);
+            }
         }
 
         return $this;
