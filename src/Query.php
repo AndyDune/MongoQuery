@@ -139,7 +139,7 @@ class Query
      */
     public function find(\MongoDB\Collection $collection, $options = [])
     {
-        return $collection->find($this->get(), $options);
+        return $collection->find($this->get(), array_replace($this->getFindOptions(), $options));
     }
 
     /**
@@ -151,7 +151,7 @@ class Query
      */
     public function findOne(\MongoDB\Collection $collection, $options = [])
     {
-        return $collection->findOne($this->get(), $options);
+        return $collection->findOne($this->get(), array_replace($this->getFindOptions(), $options));
     }
 
     /**
