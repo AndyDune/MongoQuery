@@ -21,7 +21,7 @@ class QueryTest extends TestCase
         $field = $query->field('name');
         $this->assertInstanceOf(Query::class, $field);
         $result = $field->get();
-        $this->assertEquals(['$and' => []], $result);
+        $this->assertEquals([], $result);
     }
 
     public function testIn()
@@ -242,6 +242,74 @@ class QueryTest extends TestCase
         $this->assertCount(1, $results);
         $this->assertEquals(90, $results[0]['price']);
 
+
+    }
+
+    public function testSortLimitOffset()
+    {
+        $mongo =  new \MongoDB\Client();
+        $collection = $mongo->selectDatabase('test')->selectCollection('test');
+        $collection->deleteMany([]);
+        $collection->insertOne(['price' => 10]);
+        $collection->insertOne(['price' => 20]);
+        $collection->insertOne(['price' => 30]);
+        $collection->insertOne(['price' => 40]);
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(2)->field('price')->sortAsc()->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(2, $resultArray);
+        $this->assertEquals(10, $resultArray[0]['price']);
+        $this->assertEquals(20, $resultArray[1]['price']);
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(2)->field('price')->sortDesc()->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(2, $resultArray);
+        $this->assertEquals(40, $resultArray[0]['price']);
+        $this->assertEquals(30, $resultArray[1]['price']);
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(1)->field('price')->sortDesc()->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(1, $resultArray);
+        $this->assertEquals(40, $resultArray[0]['price']);
+
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(2)->skip(1)->field('price')->sortDesc()->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(2, $resultArray);
+        $this->assertEquals(30, $resultArray[0]['price']);
+        $this->assertEquals(20, $resultArray[1]['price']);
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(2)->skip(1)->sortAsc('price')->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(2, $resultArray);
+        $this->assertEquals(20, $resultArray[0]['price']);
+        $this->assertEquals(30, $resultArray[1]['price']);
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(2)->skip(2)->sortAsc('price')->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(2, $resultArray);
+        $this->assertEquals(30, $resultArray[0]['price']);
+        $this->assertEquals(40, $resultArray[1]['price']);
+
+
+        $query = new Query(['price' => 'int']);
+        $result = $query->limit(2)->skip(3)->sortAsc('price')->find($collection);
+        $this->assertInstanceOf('MongoDb\Driver\Cursor', $result);
+        $resultArray = $result->toArray();
+        $this->assertCount(1, $resultArray);
+        $this->assertEquals(40, $resultArray[0]['price']);
 
     }
 

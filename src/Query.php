@@ -204,6 +204,9 @@ class Query
     public function get($logic = null)
     {
         $this->setFieldsJoinLogic($logic);
+        if (!$this->fields) {
+            return [];
+        }
         return [$this->fieldsJoinLogic => array_map((function ($value) {
             if ($value instanceof Query) {
                 return $value->get();
