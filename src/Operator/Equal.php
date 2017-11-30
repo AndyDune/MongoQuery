@@ -22,7 +22,9 @@ class Equal extends OperatorAbstract
         if (count($params) != 1) {
             return false;
         }
-        return [$this->fieldName => ['$eq' => $this->query->getFieldsCorrector()->correct($this->fieldName, $params[0])]];
+        return [$this->fieldName => $this->query->getFieldsCorrector()->correct($this->fieldName, $params[0])];
+        // @todo open for mongo 3
+        // return [$this->fieldName => ['$eq' => $this->query->getFieldsCorrector()->correct($this->fieldName, $prams[0])]];
     }
 
 }
