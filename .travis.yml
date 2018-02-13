@@ -8,6 +8,7 @@ services: mongodb
 
 before_install:
   - if [[ $TRAVIS_PHP_VERSION = 7.0 ]]; then pecl install mongodb; fi
+  - if [[ $TRAVIS_PHP_VERSION = 7.1 ]]; then pecl install mongodb; fi
   - echo "extension = mongodb.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 install:
