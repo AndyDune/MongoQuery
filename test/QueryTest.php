@@ -53,7 +53,7 @@ class QueryTest extends TestCase
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['code' => 1]);
         $collection->insertOne(['code' => 2]);
         $collection->insertOne(['code' => 3]);
@@ -89,7 +89,7 @@ class QueryTest extends TestCase
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['price' => 20]);
         $collection->insertOne(['price' => 5]);
         $collection->insertOne(['price' => '30']);
@@ -134,7 +134,7 @@ class QueryTest extends TestCase
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['price' => 110]);
         $collection->insertOne(['price' => 120]);
         $collection->insertOne(['price' => 90]);
@@ -153,7 +153,7 @@ class QueryTest extends TestCase
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['price' => 110]);
         $collection->insertOne(['price' => 10]);
         $collection->insertOne(['price' => 90]);
@@ -196,7 +196,7 @@ class QueryTest extends TestCase
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['price' => 10]);
         $collection->insertOne(['price' => 90]);
 
@@ -251,7 +251,7 @@ class QueryTest extends TestCase
     {
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['price' => 10]);
         $collection->insertOne(['price' => 20]);
         $collection->insertOne(['price' => 30]);

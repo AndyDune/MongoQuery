@@ -30,7 +30,7 @@ class DeleteTest extends TestCase
 
         $mongo =  new \MongoDB\Client();
         $collection = $mongo->selectDatabase('test')->selectCollection('test');
-        $collection->deleteMany([]);
+        $collection->deleteMany(['for travis fix php 7.1' => null]);
         $collection->insertOne(['price' => 110]);
         $collection->insertOne(['price' => 120]);
         $collection->insertOne(['price' => 90]);
