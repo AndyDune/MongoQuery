@@ -13,14 +13,14 @@
             "email": "info@rznw.ru"
         }
     ],
-    "homepage": "https://github.com/AndyDune/Pipeline",
+    "homepage": "https://github.com/AndyDune/MongoQuery",
     "autoload": {
         "psr-4": {
             "AndyDune\\MongoQuery\\": "src/"
         }
     },
     "require": {
-        "php": "^7.0 || ^7.1",
+        "php": "^7.0 || ^7.1 || ^7.2",
         "mongodb/mongodb": "^1.1"
     },
     "require-dev": {
