@@ -155,6 +155,17 @@ class Query
     }
 
     /**
+     * Delete many request.
+     *
+     * @param \MongoDB\Collection $collection
+     * @return mixed
+     */
+    public function deleteMany(\MongoDB\Collection $collection)
+    {
+        return $collection->deleteMany($this->get());
+    }
+
+    /**
      *
      *
      * @param bool $on on or off nex not.
