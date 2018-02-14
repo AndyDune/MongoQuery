@@ -166,6 +166,16 @@ class Query
     }
 
     /**
+     * @param \MongoDB\Collection $collection
+     * @param array $options
+     * @return int
+     */
+    public function count(\MongoDB\Collection $collection, $options = [])
+    {
+        return $collection->count($this->get(), $options);
+    }
+
+    /**
      *
      *
      * @param bool $on on or off nex not.
