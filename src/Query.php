@@ -2,7 +2,7 @@
 /**
  * Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, it's only builder.
  *
- * PHP version 7.0 and 7.1
+ * PHP version >= 7.1
  *
  *
  * @package andydune/mongo-query

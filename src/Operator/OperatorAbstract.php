@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * PHP version 7.0 and 7.1
+ * PHP version >= 7.1
  *
  * @package andydune/mongo-query
  * @link  https://github.com/AndyDune/MongoQuery for the canonical source repository
