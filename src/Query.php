@@ -14,6 +14,7 @@
  */
 namespace AndyDune\MongoQuery;
 
+use AndyDune\MongoOdm\DocumentAbstract;
 use AndyDune\MongoQuery\Operator\{
     Between, Equal, In, Not, GreaterThan, LessThan, NotEqual,
     Limit, Skip, SortAsc, SortDesc
@@ -72,7 +73,11 @@ class Query
 
     public function __construct($fieldsMap = null)
     {
-        $this->fieldsCorrector = new FieldTypeCorrector($fieldsMap);
+        if ($fieldsMap and $fieldsMap instanceof DocumentAbstract) {
+            $this->fieldsCorrector = new FieldTypeOdmCorrector($fieldsMap);
+        } else {
+            $this->fieldsCorrector = new FieldTypeCorrector($fieldsMap);
+        }
     }
 
     public function mergeFindOptions($options)
