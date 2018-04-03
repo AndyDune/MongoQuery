@@ -16,6 +16,9 @@
 namespace AndyDune\MongoQuery;
 
 
+use AndyDune\DateTime\DateTime;
+use MongoDB\BSON\UTCDateTime;
+
 class FieldTypeCorrector
 {
     protected $fieldsMap;
@@ -30,6 +33,7 @@ class FieldTypeCorrector
         'bool'    => 'correctBoolean',
         'boolean' => 'correctBoolean',
         'b'       => 'correctBoolean',
+        'datetime'       => 'correctDatetime',
         //'createdAtTimestamp' => 'correctDateTime',
         //'updatedAtTimestamp' => 'correctDateTime',
     ];
@@ -69,6 +73,17 @@ class FieldTypeCorrector
     protected function correctString($value)
     {
         return (string)$value;
+    }
+
+    protected function correctDatetime($value)
+    {
+        if (is_integer($value)) {
+            return new UTCDateTime($value * 1000);
+        }
+
+        $datetime = new DateTime();
+        $datetime->add($value);
+        return new UTCDateTime($datetime->getTimestamp() * 1000);
     }
 
     protected function correctBoolean($value)

@@ -15,6 +15,7 @@
 namespace AndyDune\MongoQueryTest;
 use AndyDune\MongoQuery\FieldTypeCorrector;
 use AndyDune\MongoQuery\Query;
+use MongoDB\BSON\UTCDateTime;
 use PHPUnit\Framework\TestCase;
 
 class FieldTypeCorrectorTest extends TestCase
@@ -52,5 +53,18 @@ class FieldTypeCorrectorTest extends TestCase
         // don touche next fields
         $result = $corrector->correct('string', 'frog');
         $this->assertTrue('frog' === $result);
+
+        $corrector = new FieldTypeCorrector(['date' => 'datetime']);
+        $timeNow = time();
+        $dt = new UTCDateTime($timeNow * 1000);
+        $this->assertEquals($timeNow, $dt->toDateTime()->getTimestamp());
+        $dtR = $corrector->correct('date', $timeNow);
+        $this->assertEquals($dt->toDateTime(), $dtR->toDateTime());
+
+
+        $dt = new UTCDateTime(($timeNow - 60) * 1000);
+        $dtR = $corrector->correct('date', '-1 minute');
+        $this->assertEquals($dt->toDateTime(), $dtR->toDateTime());
+
     }
 }

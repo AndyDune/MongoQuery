@@ -21,7 +21,8 @@
     },
     "require": {
         "php": ">=7.1",
-        "mongodb/mongodb": "^1.1",
+        "mongodb/mongodb": "^1",
+        "andydune/datetime": "^1",
         "andydune/mongo-odm": "dev-master"
     },
     "require-dev": {
