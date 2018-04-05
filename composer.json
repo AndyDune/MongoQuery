@@ -23,7 +23,7 @@
         "php": ">=7.1",
         "mongodb/mongodb": "^1",
         "andydune/datetime": "^1",
-        "andydune/mongo-odm": "dev-master"
+        "andydune/mongo-odm": "^1"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.7.15 || ^6.0.8",
