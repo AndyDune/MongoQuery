@@ -48,7 +48,7 @@ php composer.phar require andydune/mongo-query
 Or edit your `composer.json`:
 ```
 "require" : {
-     "andydune/pipeline": "^0"
+     "andydune/mongo-query": "^1"
 }
 
 ```
