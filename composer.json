@@ -22,7 +22,7 @@
     "require": {
         "php": ">=7.1",
         "mongodb/mongodb": "^1",
-        "andydune/datetime": "^1",
+        "andydune/datetime": "^2",
         "andydune/mongo-odm": "^1"
     },
     "require-dev": {
