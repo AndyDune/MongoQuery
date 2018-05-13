@@ -77,12 +77,23 @@ class FieldTypeCorrector
 
     protected function correctDatetime($value)
     {
+        if ($value instanceof UTCDateTime) {
+            return $value;
+        }
+
         if (is_integer($value)) {
             return new UTCDateTime($value * 1000);
         }
 
-        $datetime = new DateTime();
-        $datetime->add($value);
+        if ($value instanceof DateTime) {
+            $datetime = $value;
+        } else if (in_array(substr($value, 0, 1), ['-', '+']))  {
+            $datetime = new DateTime();
+            $datetime->add($value);
+        } else {
+            $datetime = new DateTime($value);
+        }
+
         return new UTCDateTime($datetime->getTimestamp() * 1000);
     }
 

@@ -13,6 +13,7 @@
 
 
 namespace AndyDune\MongoQueryTest;
+use AndyDune\DateTime\DateTime;
 use AndyDune\MongoQuery\FieldTypeCorrector;
 use AndyDune\MongoQuery\Query;
 use MongoDB\BSON\UTCDateTime;
@@ -65,6 +66,20 @@ class FieldTypeCorrectorTest extends TestCase
         $dt = new UTCDateTime(($timeNow - 60) * 1000);
         $dtR = $corrector->correct('date', '-1 minute');
         $this->assertEquals($dt->toDateTime(), $dtR->toDateTime());
+
+        $dt = new UTCDateTime(($timeNow - 61) * 1000);
+        $dtR = $corrector->correct('date', new DateTime($timeNow - 61));
+        $this->assertEquals($dt->toDateTime(), $dtR->toDateTime());
+
+        $dt = new UTCDateTime(($timeNow - 62) * 1000);
+        $dtR = $corrector->correct('date', date('Y-m-d H:i:s', $timeNow - 62));
+        $this->assertEquals($dt->toDateTime(), $dtR->toDateTime());
+
+
+        $dt = new UTCDateTime(($timeNow - 63) * 1000);
+        $dtR = $corrector->correct('date', $dt);
+        $this->assertEquals($dt->toDateTime(), $dtR->toDateTime());
+
 
     }
 }
