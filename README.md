@@ -199,5 +199,33 @@ $queryArray = $queryAdd->field('price')->gt(false)->get();
 $queryArray = [
    'price' => ['$gt' => 0] // (int)false -> 0
 ];
+``` 
 
+### Datetime type
+
+You can use simple types for datetime.
+
+Integer value is use as timestamp:
+```php
+$query = new Query(['date' => 'datetime']);
+$query->field('date')->lt(time() - 60); // documents with date 60 seconds old
+``` 
+
+String must be *Y-m-d H:i:s* format: 
+```php
+$query = new Query(['date' => 'datetime']);
+$query->field('date')->between(date(time() - 60, 'Y-m-d H:i:s'), time()); // documents between date 60 seconds old and now
+``` 
+
+String with prefix `-` or `+` 
+```php
+$query = new Query(['date' => 'datetime']);
+$query->field('date')->between('- 5 days', '+ 5 minutes'); // 5 days before and 5 minutes to future
+``` 
+
+Using type `AndyDune\DateTime\DateTime` 
+```php
+use AndyDune\DateTime\DateTime;
+$query = new Query(['date' => 'datetime']);
+$query->field('date')->eq(new DateTime());
 ``` 
