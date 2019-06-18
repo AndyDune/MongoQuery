@@ -8,6 +8,13 @@
 
 Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, it's only builder. So you may feel free to use it standalone or with any orm like [mongolid](https://github.com/leroy-merlin-br/mongolid)
 
+Requirements
+------------
+
+- PHP version >= 7.1
+- A couple of beers in the fridge.
+
+
 ## What is beauty
 Originally it looks like:
 ```php
