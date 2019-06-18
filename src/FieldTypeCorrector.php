@@ -23,6 +23,11 @@ class FieldTypeCorrector
 {
     protected $fieldsMap;
 
+    const TYPE_DATETIME = 'datetime';
+    const TYPE_BOOLEAN  = 'boolean';
+    const TYPE_INTEGER  = 'integer';
+    const TYPE_STRING  = 'string';
+
     protected $typeAliasesToCorrectMethod = [
         'int'     => 'correctInteger',
         'integer' => 'correctInteger',

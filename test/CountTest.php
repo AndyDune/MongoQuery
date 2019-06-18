@@ -17,6 +17,9 @@ use PHPUnit\Framework\TestCase;
 
 class CountTest extends TestCase
 {
+    /**
+     * @covers Query::count
+     */
     public function testDeleteMany()
     {
 

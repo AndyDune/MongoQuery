@@ -21,9 +21,29 @@ use PHPUnit\Framework\TestCase;
 
 class FieldTypeCorrectorTest extends TestCase
 {
+    /**
+     * @covers FieldTypeCorrector::correct
+     * @covers FieldTypeCorrector::correctDatetime
+     * @covers FieldTypeCorrector::correctInteger
+     * @covers FieldTypeCorrector::correctBoolean
+     * @covers FieldTypeCorrector::correctString
+     */
     public function testFieldMethod()
     {
-        $corrector = new FieldTypeCorrector(['number' => 'i']);
+        $corrector = new FieldTypeCorrector(['number' => FieldTypeCorrector::TYPE_INTEGER,
+            'name' => FieldTypeCorrector::TYPE_STRING,
+            'allow' => FieldTypeCorrector::TYPE_BOOLEAN
+            ]);
+
+        $result = $corrector->correct('allow', '123');
+        $this->assertTrue(true === $result);
+        $result = $corrector->correct('allow', 0);
+        $this->assertTrue(false === $result);
+
+
+        $result = $corrector->correct('name', '123');
+        $this->assertTrue('123' === $result);
+
 
         $result = $corrector->correct('number', '123');
         $this->assertTrue(123 === $result);
@@ -51,11 +71,11 @@ class FieldTypeCorrectorTest extends TestCase
         $this->assertTrue(0 === $result);
 
 
-        // don touche next fields
+        // don't touch next fields
         $result = $corrector->correct('string', 'frog');
         $this->assertTrue('frog' === $result);
 
-        $corrector = new FieldTypeCorrector(['date' => 'datetime']);
+        $corrector = new FieldTypeCorrector(['date' => FieldTypeCorrector::TYPE_DATETIME]);
         $timeNow = time();
         $dt = new UTCDateTime($timeNow * 1000);
         $this->assertEquals($timeNow, $dt->toDateTime()->getTimestamp());
