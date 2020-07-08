@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/andydune/mongo-query.svg?style=flat-square)](https://packagist.org/packages/andydune/mongo-query)
 
 
-Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM nr ODM, it's only builder. So you may feel free to use it standalone or with any orm like [mongolid](https://github.com/leroy-merlin-br/mongolid)
+Add beauty to momgodb query arrays. Less errors, less brackets, more understanding. It is not ORM or ODM, it's only builder. So you may feel free to use it standalone or with any orm like [mongolid](https://github.com/leroy-merlin-br/mongolid)
 
 Requirements
 ------------
